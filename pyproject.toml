@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "assistant-bot"
+version = "0.1.0"
+description = "CLI Personal Assistant (contacts & birthdays) for the team project"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{ name = "Team Assistant Bot" }]
+
+[project.scripts]
+assistant-bot = "assistant.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
