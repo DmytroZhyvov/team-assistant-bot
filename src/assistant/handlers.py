@@ -68,6 +68,16 @@ def show_phone(args: list[str], book: AddressBook) -> str:
 
 
 @input_error
+def add_email(args: list[str], book: AddressBook) -> str:
+    """Додає email до існуючого контакту."""
+    name, email_str, *_ = args
+    record = book.find(name)
+    if not record:
+        raise KeyError
+    record.add_email(email_str)
+    return f"Email added for contact '{name}'."
+
+@input_error
 def show_email(args: list[str], book: AddressBook) -> str:
     """Показує email для вказаного контакту."""
     name = args[0]
