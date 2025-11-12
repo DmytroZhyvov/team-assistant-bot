@@ -67,28 +67,6 @@ def show_phone(args: list[str], book: AddressBook) -> str:
     return phones
 
 
-@input_error
-def add_email(args: list[str], book: AddressBook) -> str:
-    """Додає email до існуючого контакту."""
-    name, email_str, *_ = args
-    record = book.find(name)
-    if not record:
-        raise KeyError
-    record.add_email(email_str)
-    return f"Email added for contact '{name}'."
-
-@input_error
-def show_email(args: list[str], book: AddressBook) -> str:
-    """Показує email для вказаного контакту."""
-    name = args[0]
-    record = book.find(name)
-    if not record:
-        raise KeyError
-    if record.email:
-        return record.email.value
-    return "Email not set."
-
-
 def show_all(book: AddressBook) -> str:
     """Показує всі контакти в адресній книзі."""
     if not book.data:
@@ -136,3 +114,23 @@ def remove_contact(args: list[str], book: AddressBook) -> str:
         raise KeyError
     book.delete(name)
     return f"Contact '{name}' has been removed."
+
+
+@input_error
+def add_email(args: list[str], book: AddressBook) -> str:
+    name, email, *_ = args
+    record = book.find(name)
+    if not record:
+        raise KeyError
+    record.add_email(email)
+    return "Email added."
+
+
+@input_error
+def edit_email(args: list[str], book: AddressBook) -> str:
+    name, new_email, *_ = args
+    record = book.find(name)
+    if not record:
+        raise KeyError
+    record.edit_email(new_email)
+    return "Email updated."
