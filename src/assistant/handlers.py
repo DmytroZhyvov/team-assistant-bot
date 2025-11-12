@@ -114,3 +114,23 @@ def remove_contact(args: list[str], book: AddressBook) -> str:
         raise KeyError
     book.delete(name)
     return f"Contact '{name}' has been removed."
+
+
+@input_error
+def add_email(args: list[str], book: AddressBook) -> str:
+    name, email, *_ = args
+    record = book.find(name)
+    if not record:
+        raise KeyError
+    record.add_email(email)
+    return "Email added."
+
+
+@input_error
+def edit_email(args: list[str], book: AddressBook) -> str:
+    name, new_email, *_ = args
+    record = book.find(name)
+    if not record:
+        raise KeyError
+    record.edit_email(new_email)
+    return "Email updated."

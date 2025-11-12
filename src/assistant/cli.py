@@ -10,6 +10,8 @@ from .handlers import (
     show_birthday,
     birthdays,
     remove_contact,
+    add_email,
+    edit_email
 )
 
 
@@ -43,6 +45,10 @@ def main():
             print(show_birthday(args, book))
         elif command == "birthdays":
             print(birthdays(book))
+        elif command == "add-email":
+            print(add_email(args, book))
+        elif command == "change-email":
+            print(edit_email(args, book))
         else:
             print("Invalid command.")
 
