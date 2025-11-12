@@ -62,6 +62,26 @@ class Birthday(Field):
         """Повертає дату у вихідному форматі."""
         return self.value.strftime("%d.%m.%Y")
 
+import re
+
+class Email:
+    """Клас для зберігання та валідації email."""
+    def __init__(self, email: str):
+        if not self.validate_email(email):
+            raise ValueError(f"Invalid email format: {email}")
+        self.value = email
+
+    @staticmethod
+    def validate_email(email: str) -> bool:
+        """Перевіряє формат email за допомогою регулярного виразу."""
+        pattern = r"^[\w\.-]+@[\w\.-]+\.\w{2,}$"
+        return re.match(pattern, email) is not None
+
+    def update_email(self, new_email: str) -> None:
+        """Оновлює email після перевірки."""
+        if not self.validate_email(new_email):
+            raise ValueError(f"Invalid email format: {new_email}")
+        self.value = new_email
 
 class Record:
     """Клас для зберігання інформації про контакт."""
@@ -102,12 +122,30 @@ class Record:
             raise ValueError("Birthday already set.")
         self.birthday = Birthday(birthday_str)
 
+    def add_email(self, email_str: str) -> None:
+        """Додає email до контакту після перевірки."""
+        if self.email is not None:
+            raise ValueError("Email already set. Use edit_email() to change it.")
+        try:
+            self.email = Email(email_str)
+        except ValueError as e:
+            print(f"⚠️ {e}")
+
+    def edit_email(self, new_email: str) -> None:
+        """Редагує існуючий email."""
+        if self.email is None:
+            print("⚠️ Email not set yet. Use add_email() to add one.")
+            return
+        try:
+            self.email.update_email(new_email)
+        except ValueError as e:
+            print(f"⚠️ {e}")
+
     def __str__(self) -> str:
         phones_str = "; ".join(p.phone_number for p in self.phones) or "No phones"
         bday = self.birthday.date_str if self.birthday else "N/A"
-        return (
-            f"Contact name: {self.name.value}, phones: {phones_str}, birthday: {bday}"
-        )
+        email_str = self.email.value if self.email else "N/A"
+        return f"Contact name: {self.name.value}, phones: {phones_str}, birthday: {bday}, email: {email_str}"
 
 
 class AddressBook(UserDict):
