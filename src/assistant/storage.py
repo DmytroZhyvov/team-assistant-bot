@@ -1,19 +1,30 @@
 import pickle
-from .models import AddressBook
+from assistant.models import AddressBook
 
-DEFAULT_DB = "addressbook.pkl"
+FILENAME = "addressbook.pkl"
 
-
-def save_data(book: AddressBook, filename: str = "addressbook.pkl") -> None:
-    """Серіалізація адресної книги у файл за допомогою pickle."""
-    with open(filename, "wb") as f:
+def save_data(book: AddressBook):
+    with open(FILENAME, "wb") as f:
         pickle.dump(book, f)
 
-
-def load_data(filename: str = "addressbook.pkl") -> AddressBook:
-    """Десеріалізація адресної книги з файлу, або створення нової, якщо файл відсутній."""
+def load_data() -> AddressBook:
     try:
-        with open(filename, "rb") as f:
+        with open(FILENAME, "rb") as f:
+            return pickle.load(f)
+    except FileNotFoundError:
+        return AddressBook()
+import pickle
+from assistant.models import AddressBook
+
+FILENAME = "addressbook.pkl"
+
+def save_data(book: AddressBook):
+    with open(FILENAME, "wb") as f:
+        pickle.dump(book, f)
+
+def load_data() -> AddressBook:
+    try:
+        with open(FILENAME, "rb") as f:
             return pickle.load(f)
     except FileNotFoundError:
         return AddressBook()
