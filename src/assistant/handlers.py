@@ -67,6 +67,22 @@ def show_phone(args: list[str], book: AddressBook) -> str:
     return phones
 
 
+@input_error
+def remove_phone(args: list[str], book: AddressBook) -> str:
+    """Видаляє конкретний номер телефону з контакту."""
+
+    name, phone, *_ = args
+    record = book.find(name)
+    if not record:
+        raise KeyError
+    if not record.phones:
+        return "No phones."
+    if not record.find_phone(phone):
+        return "Phone not found."
+    record.remove_phone(phone)
+    return f"Phone {phone} has been removed."
+
+
 def show_all(book: AddressBook) -> str:
     """Показує всі контакти в адресній книзі."""
     if not book.data:
