@@ -7,7 +7,7 @@ Manages contacts and birthdays — supports adding, editing, searching, and stor
 
 ## Features
 
-✅ Add and edit contacts (name + phone number)  
+✅ Add, edit and delete contact  
 ✅ Store and show birthdays  
 ✅ Validate phone numbers  
 ✅ Show upcoming birthdays  

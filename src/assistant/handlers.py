@@ -103,3 +103,14 @@ def birthdays(book: AddressBook) -> str:
     if not upcoming:
         return "No birthdays in the next 7 days."
     return "\n".join(upcoming)
+
+
+@input_error
+def remove_contact(args: list[str], book: AddressBook) -> str:
+    """Видаляє контакт з адресної книги за їм'ям."""
+    name = args[0]
+    record = book.find(name)
+    if not record:
+        raise KeyError
+    book.delete(name)
+    return f"Contact '{name}' has been removed."
