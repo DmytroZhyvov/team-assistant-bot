@@ -9,6 +9,7 @@ from .handlers import (
     add_birthday,
     show_birthday,
     birthdays,
+    remove_contact,
 )
 
 
@@ -28,6 +29,8 @@ def main():
             print("How can I help you?")
         elif command == "add":
             print(add_contact(args, book))
+        elif command in ("remove-contact", "delete-contact"):
+            print(remove_contact(args, book))
         elif command == "change":
             print(change_contact(args, book))
         elif command == "phone":
