@@ -67,6 +67,18 @@ def show_phone(args: list[str], book: AddressBook) -> str:
     return phones
 
 
+@input_error
+def show_email(args: list[str], book: AddressBook) -> str:
+    """Показує email для вказаного контакту."""
+    name = args[0]
+    record = book.find(name)
+    if not record:
+        raise KeyError
+    if record.email:
+        return record.email.value
+    return "Email not set."
+
+
 def show_all(book: AddressBook) -> str:
     """Показує всі контакти в адресній книзі."""
     if not book.data:

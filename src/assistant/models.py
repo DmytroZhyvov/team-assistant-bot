@@ -2,7 +2,7 @@ from collections import UserDict
 from datetime import datetime, timedelta
 from functools import wraps
 import pickle
-
+import re
 
 class Field:
     """Базовий клас для всіх полів."""
@@ -62,9 +62,8 @@ class Birthday(Field):
         """Повертає дату у вихідному форматі."""
         return self.value.strftime("%d.%m.%Y")
 
-import re
 
-class Email:
+class Email(Field):
     """Клас для зберігання та валідації email."""
     def __init__(self, email: str):
         if not self.validate_email(email):
@@ -90,6 +89,7 @@ class Record:
         self.name = Name(name)
         self.phones: list[Phone] = []
         self.birthday: Birthday | None = None
+        self.email: Email | None = Email(Email) if Email else None
 
     def add_phone(self, phone_number: str) -> None:
         """Додає номер телефону до запису."""
