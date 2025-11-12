@@ -70,8 +70,6 @@ def show_phone(args: list[str], book: AddressBook) -> str:
 @input_error
 def remove_phone(args: list[str], book: AddressBook) -> str:
     """Видаляє конкретний номер телефону з контакту."""
-    if len(args) < 2:
-        raise ValueError("Usage: remove-phone {Contact Name} {Phone}")
 
     name, phone, *_ = args
     record = book.find(name)
@@ -79,9 +77,10 @@ def remove_phone(args: list[str], book: AddressBook) -> str:
         raise KeyError
     if not record.phones:
         return "No phones."
-    if record.remove_phone(phone):
-        return "Phone removed."
-    return "Phone not found."
+    if not record.find_phone(phone):
+        return "Phone not found."
+    record.remove_phone(phone)
+    return f"Phone {phone} has been removed."
 
 
 def show_all(book: AddressBook) -> str:
