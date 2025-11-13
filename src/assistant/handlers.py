@@ -1,5 +1,6 @@
 from functools import wraps
 from assistant.models import AddressBook, Record
+from assistant.notes import NotesBook
 
 
 def input_error(func):
@@ -150,3 +151,32 @@ def edit_email(args: list[str], book: AddressBook) -> str:
         raise KeyError
     record.edit_email(new_email)
     return "Email updated."
+
+
+@input_error
+def add_note(args: list[str], notes: NotesBook) -> str:
+    """Додає нову нотатку."""
+    text = " ".join(args)
+    return notes.add_note(text)
+
+
+@input_error
+def find_note(args: list[str], notes: NotesBook) -> str:
+    """Пошук нотаток за тегом або словом."""
+    keyword = " ".join(args)
+    return notes.find_notes(keyword)
+
+
+@input_error
+def edit_note(args: list[str], notes: NotesBook) -> str:
+    """Редагує текст нотатки."""
+    note_id = int(args[0])
+    new_text = " ".join(args[1:])
+    return notes.edit_note(note_id, new_text)
+
+
+@input_error
+def delete_note(args: list[str], notes: NotesBook) -> str:
+    """Видаляє нотатку за ID."""
+    note_id = int(args[0])
+    return notes.delete_note(note_id)
