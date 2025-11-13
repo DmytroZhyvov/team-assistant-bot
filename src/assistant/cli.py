@@ -23,6 +23,35 @@ from .handlers import (
     find_note_tag,
     sort_tags
 )
+from prompt_toolkit import prompt
+from prompt_toolkit.completion import WordCompleter
+import difflib
+
+KNOWN_COMMANDS = [
+    "hello",
+    "add",
+    "remove-contact",
+    "delete-contact",
+    "change",
+    "remove-phone",
+    "phone",
+    "all",
+    "add-birthday",
+    "show-birthday",
+    "birthdays",
+    "add-email",
+    "change-email",
+    "close",
+    "exit",
+]
+
+command_completer = WordCompleter(KNOWN_COMMANDS, ignore_case=True)
+
+def suggest_command(command: str) -> str | None:
+    """Повертає найбільш схожу команду або None, якщо нічого схожого немає."""
+
+    matches = difflib.get_close_matches(command, KNOWN_COMMANDS, n=1, cutoff=0.6)
+    return matches[0] if matches else None
 
 
 def main():
@@ -31,7 +60,7 @@ def main():
     notes = load_notes()
     print("Welcome to the assistant bot!")
     while True:
-        user_input = input("Enter a command: ")
+        user_input = prompt("Enter a command: ", completer=command_completer)
         command, args = parse_input(user_input)
         if command in ("close", "exit"):
             # Перед виходом зберігаємо AddressBook у файл
