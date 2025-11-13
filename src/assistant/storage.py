@@ -36,16 +36,20 @@ def load_notes(filename: str = DEFAULT_DB_NOTES) -> NotesBook:
         return NotesBook()
 
 
-def save_all(book: AddressBook, notes: NotesBook,
-             book_filename: str = DEFAULT_DB,
-             notes_filename: str = DEFAULT_DB_NOTES) -> None:
+def save_all(
+    book: AddressBook,
+    notes: NotesBook,
+    book_filename: str = DEFAULT_DB,
+    notes_filename: str = DEFAULT_DB_NOTES,
+) -> None:
     """Зберігає AddressBook та NotesBook у відповідні файли."""
     save_data(book, book_filename)
     save_notes(notes, notes_filename)
 
 
-def load_all(book_filename: str = DEFAULT_DB,
-             notes_filename: str = DEFAULT_DB_NOTES) -> tuple[AddressBook, NotesBook]:
+def load_all(
+    book_filename: str = DEFAULT_DB, notes_filename: str = DEFAULT_DB_NOTES
+) -> tuple[AddressBook, NotesBook]:
     """Завантажує AddressBook та NotesBook з файлів."""
     address_book = load_data(book_filename)
     notes_book = load_notes(notes_filename)
