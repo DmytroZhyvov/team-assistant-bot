@@ -66,8 +66,8 @@ def main():
             print(add_birthday(args, book))
         elif command == "show-birthday":
             print(show_birthday(args, book))
-        elif command == "birthdays":
-            print(birthdays(book))
+        elif command == "birthdays-in":
+            print(birthdays(args, book))
         elif command == "add-email":
             print(add_email(args, book))
         elif command == "change-email":
