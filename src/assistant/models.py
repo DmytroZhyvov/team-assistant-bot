@@ -69,18 +69,28 @@ class Email(Field):
 
     def __init__(self, email: str):
         if not self.validate_email(email):
-            raise ValueError(f"Invalid email format: {email}")
-        super().__init__(email)
+            # Якщо email не валідний — підказуємо користувачу правильний формат
+            raise ValueError(
+                f"Невірний формат email: '{email}'. "
+                f"Приклад правильного формату: example@gmail.com"
+            )
+        self.value = email
 
     @staticmethod
     def validate_email(email: str) -> bool:
-        pattern = r"^(?=.{1,254}$)[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"
+        """Перевіряє правильність формату email."""
+        pattern = r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
         return re.match(pattern, email) is not None
 
     def update_email(self, new_email: str) -> None:
+        """Оновлює email після повторної перевірки."""
         if not self.validate_email(new_email):
-            raise ValueError(f"Invalid email format: {new_email}")
+            raise ValueError(
+                f"Невірний формат email: '{new_email}'. "
+                f"Приклад правильного формату: example@gmail.com"
+            )
         self.value = new_email
+
 
 
 class Record:
