@@ -60,7 +60,7 @@ def main():
             print(remove_phone(args, book))
         elif command == "show-phone":
             print(show_phone(args, book))
-        elif command == "show-all":
+        elif command == "show-all-contacts":
             print(show_all(book))
         elif command == "add-birthday":
             print(add_birthday(args, book))
