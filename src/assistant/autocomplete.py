@@ -2,26 +2,33 @@ from prompt_toolkit.completion import Completer, Completion
 
 COMMANDS = [
     "hello",
-    "add",
+    "add-contact",
     "remove-contact",
-    "delete-contact",
-    "change",
+    "change-contact",
     "remove-phone",
-    "phone",
-    "all",
+    "show-phone",
+    "show-all",
     "add-birthday",
     "show-birthday",
     "birthdays",
     "add-email",
     "change-email",
+    "add-note",
+    "show-notes",
+    "find-note",
+    "edit-note",
+    "delete-note",
+    "add-tag",
+    "remove-tag",
+    "find-tag",
+    "sort-tags",
     "close",
     "exit",
 ]
 
+
 class CommandCompleter(Completer):
-    """
-    Autocomplete only for the *command* part
-    """
+    """Клас автокомпліта для команд"""
 
     def __init__(self, commands: list[str]):
         self.commands = commands
