@@ -10,7 +10,7 @@ COMMANDS = [
     "show-all-contacts",
     "add-birthday",
     "show-birthday",
-    "birthdays",
+    "birthdays-in",
     "add-email",
     "change-email",
     "add-note",

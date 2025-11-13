@@ -2,6 +2,7 @@ from functools import wraps
 from assistant.models import AddressBook, Record
 from assistant.notes import NotesBook
 
+DEFAULT_BIRTHDAY_DAYS = 7
 
 def input_error(func):
     """Декоратор для обробки помилок вводу користувача."""
@@ -114,11 +115,13 @@ def show_birthday(args: list[str], book: AddressBook) -> str:
     return "Birthday not set."
 
 
-def birthdays(book: AddressBook) -> str:
+@input_error
+def birthdays(args: list[str], book: AddressBook) -> str:
     """Показує дні народження, які відбудуться протягом наступного тижня."""
-    upcoming = book.get_upcoming_birthdays()
+    days = int(args[0]) if args else DEFAULT_BIRTHDAY_DAYS
+    upcoming = book.get_upcoming_birthdays(days)
     if not upcoming:
-        return "No birthdays in the next 7 days."
+        return f"No birthdays in the next {days} {"days" if days != 1 else "day"}."
     return "\n".join(upcoming)
 
 

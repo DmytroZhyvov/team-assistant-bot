@@ -155,10 +155,10 @@ class AddressBook(UserDict):
         if name in self.data:
             del self.data[name]
 
-    def get_upcoming_birthdays(self) -> list[str]:
+    def get_upcoming_birthdays(self, days) -> list[str]:
         """Повертає список вітальних повідомлень на наступний тиждень."""
         today = datetime.now().date()
-        next_week = today + timedelta(days=7)
+        next_week = today + timedelta(days=days)
         greetings = []
         for rec in self.data.values():
             if rec.birthday:
