@@ -1,10 +1,12 @@
 from collections import UserDict
 
+
 class Note:
     """
     Клас однієї нотатки.
     Зберігає текст і список тегів (опціонально).
     """
+
     def __init__(self, text: str, tags=None):
         self.text = text.strip()
         self.tags = []
@@ -27,10 +29,7 @@ class Note:
     def match(self, keyword: str) -> bool:
         """Перевіряє, чи відповідає нотатка пошуку по тегу або ключовому слову."""
         keyword = keyword.lower()
-        return (
-            self.match_text(keyword)
-            or self.match_tag(keyword)
-        )
+        return self.match_text(keyword) or self.match_tag(keyword)
 
     def match_text(self, keyword: str) -> bool:
         """Перевіряє, чи містить нотатка певне слово в тексті."""
@@ -50,6 +49,7 @@ class NotesBook(UserDict):
     """
     Клас для зберігання та управління нотатками.
     """
+
     def add_note(self, text: str, tags=None):
         """Додає нову нотатку."""
         note_id = len(self.data) + 1

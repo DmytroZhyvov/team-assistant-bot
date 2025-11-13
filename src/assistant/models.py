@@ -1,7 +1,5 @@
 from collections import UserDict
 from datetime import datetime, timedelta
-from functools import wraps
-import pickle
 import re
 
 
