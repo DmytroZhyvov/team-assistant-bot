@@ -23,11 +23,11 @@ from .handlers import (
     find_note_tag,
     sort_tags
 )
-from prompt_toolkit import prompt
-from prompt_toolkit.completion import WordCompleter
-import difflib
+from prompt_toolkit import PromptSession
+from prompt_toolkit.completion import Completer, Completion
 
-KNOWN_COMMANDS = [
+
+COMMANDS = [
     "hello",
     "add",
     "remove-contact",
@@ -45,13 +45,24 @@ KNOWN_COMMANDS = [
     "exit",
 ]
 
-command_completer = WordCompleter(KNOWN_COMMANDS, ignore_case=True)
+class CommandCompleter(Completer):
+    """
+    Autocomplete only for the *command* part
+    """
 
-def suggest_command(command: str) -> str | None:
-    """Повертає найбільш схожу команду або None, якщо нічого схожого немає."""
+    def __init__(self, commands: list[str]):
+        self.commands = commands
 
-    matches = difflib.get_close_matches(command, KNOWN_COMMANDS, n=1, cutoff=0.6)
-    return matches[0] if matches else None
+    def get_completions(self, document, complete_event):
+        text = document.text_before_cursor
+
+        if not text.strip() or " " in text:
+            return
+
+        word = text.strip()
+        for cmd in self.commands:
+            if cmd.startswith(word):
+                yield Completion(cmd, start_position=-len(word))
 
 
 def main():
@@ -59,8 +70,14 @@ def main():
     book = load_data()
     notes = load_notes()
     print("Welcome to the assistant bot!")
+
+    session = PromptSession(
+        completer=CommandCompleter(COMMANDS),
+        complete_while_typing=True,
+    )
+
     while True:
-        user_input = prompt("Enter a command: ", completer=command_completer)
+        user_input = session.prompt("Enter a command: ")
         command, args = parse_input(user_input)
         if command in ("close", "exit"):
             # Перед виходом зберігаємо AddressBook у файл
