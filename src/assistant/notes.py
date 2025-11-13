@@ -88,3 +88,31 @@ class NotesBook(UserDict):
         if not self.data:
             return "No notes found."
         return "\n".join(f"{idx}: {note}" for idx, note in self.data.items())
+
+    def get_notes_by_tag(self, tag: str):
+        """Повертає всі нотатки, які містять вказаний тег."""
+        tag = tag.strip("#").lower()
+        results = [
+            f"{note_id}: {note}"
+            for note_id, note in self.data.items()
+            if tag in note.tags
+        ]
+        return "\n".join(results) if results else "No notes with this tag."
+
+    def sort_by_tags(self):
+        """Повертає всі нотатки, згруповані за тегами."""
+        tag_map = {}
+
+        for note_id, note in self.data.items():
+            for tag in note.tags:
+                tag_map.setdefault(tag, []).append(f"{note_id}: {note}")
+
+        if not tag_map:
+            return "No tags found."
+
+        result = []
+        for tag in sorted(tag_map.keys()):
+            result.append(f"\n#{tag}:")
+            result.extend(tag_map[tag])
+
+        return "\n".join(result)
