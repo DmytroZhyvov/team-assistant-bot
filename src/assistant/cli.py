@@ -17,7 +17,11 @@ from .handlers import (
     add_note,
     edit_note,
     delete_note,
-    find_note
+    find_note,
+    add_note_tag,
+    remove_note_tag,
+    find_note_tag,
+    sort_tags
 )
 
 
@@ -70,6 +74,15 @@ def main():
             print(edit_note(args, notes))
         elif command == "delete-note":
             print(delete_note(args, notes))
+        # --- Теги ---
+        elif command == "add-tag":
+            print(add_note_tag(args, notes))
+        elif command == "remove-tag":
+            print(remove_note_tag(args, notes))
+        elif command == "find-tag":
+            print(find_note_tag(args, notes))
+        elif command == "sort-tags":
+            print(sort_tags(notes))
         else:
             print("Invalid command.")
 

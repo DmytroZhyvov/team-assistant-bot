@@ -180,3 +180,44 @@ def delete_note(args: list[str], notes: NotesBook) -> str:
     """Видаляє нотатку за ID."""
     note_id = int(args[0])
     return notes.delete_note(note_id)
+
+
+@input_error
+def add_note_tag(args, notes: NotesBook):
+    """add-tag <id> <#tag>"""
+    if len(args) < 2:
+        raise ValueError("Usage: add-tag <id> <#tag>")
+    note_id = int(args[0])
+    tag = args[1]
+    note = notes.get_note(note_id)
+    if not note:
+        return "Note not found."
+    note.add_tag(tag)
+    return "Tag added."
+
+
+@input_error
+def remove_note_tag(args, notes: NotesBook):
+    """remove-tag <id> <#tag>"""
+    if len(args) < 2:
+        raise ValueError("Usage: remove-tag <id> <#tag>")
+    note_id = int(args[0])
+    tag = args[1]
+    note = notes.get_note(note_id)
+    if not note:
+        return "Note not found."
+    note.remove_tag(tag)
+    return "Tag removed."
+
+
+@input_error
+def find_note_tag(args, notes: NotesBook):
+    """find-tag <#tag>"""
+    if not args:
+        raise ValueError("Please provide tag.")
+    tag = args[0]
+    return notes.get_notes_by_tag(tag)
+
+
+def sort_tags(notes: NotesBook):
+    return notes.sort_by_tags()
