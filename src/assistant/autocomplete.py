@@ -14,6 +14,8 @@ COMMANDS = [
     "birthdays-in",
     "add-email",
     "change-email",
+    "add-address",
+    "change-address",
     "add-note",
     "show-notes",
     "find-note",

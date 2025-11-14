@@ -11,6 +11,7 @@ Helps you manage **contacts**, **birthdays**, **emails**, and **notes with tags*
 - Add, edit and delete contacts
 - Multiple phone numbers per contact
 - Email with validation
+- Address 
 - View all contacts
 
 ### Birthdays
@@ -104,6 +105,15 @@ Below is the full list of available commands with usage examples.
 |-------------------------------|-------------------------------------------|-----------------------------------------|
 | `add-email {name} {email}`    | Add email to a contact                    | `add-email John john@example.com`       |
 | `change-email {name} {email}` | Change existing email                     | `change-email John newjohn@example.com` |
+
+---
+
+### Address Commands
+
+| Command                       | Description                               | Example                                  |
+|-------------------------------|-------------------------------------------|------------------------------------------|
+| `add-address {name} {address}`    | Add address to a contact              | `add-address John 221B Baker Street`     |
+| `change-address {name} {address}` | Change existing address               | `change-address John 5 Hrushevskoho Str.`|
 
 ---
 
