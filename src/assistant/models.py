@@ -67,7 +67,9 @@ class Email(Field):
 
     def __init__(self, email: str):
         if not self.validate_email(email):
-            raise ValueError(f"Invalid email format: {email}")
+            raise ValueError(
+                f"Invalid email format: {email}. Format example: user@example.com"
+            )
         super().__init__(email)
 
     @staticmethod
@@ -77,7 +79,9 @@ class Email(Field):
 
     def update_email(self, new_email: str) -> None:
         if not self.validate_email(new_email):
-            raise ValueError(f"Invalid email format: {new_email}")
+            raise ValueError(
+                f"Invalid email format: {new_email}. Format example: user@example.com"
+            )
         self.value = new_email
 
 

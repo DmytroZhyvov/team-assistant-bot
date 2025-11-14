@@ -4,6 +4,7 @@ from assistant.notes import NotesBook
 
 DEFAULT_BIRTHDAY_DAYS = 7
 
+
 def input_error(func):
     """Декоратор для обробки помилок вводу користувача."""
 
