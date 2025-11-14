@@ -173,7 +173,13 @@ class Record:
         address_str = (
             getattr(self.address, "value", "N/A") if hasattr(self, "address") else "N/A"
         )
-        return f"Contact name: {self.name.value}, phones: {phones_str}, birthday: {bday}, email: {email_str}, address: {address_str}"
+        return (
+            f"Contact name: {self.name.value}, "
+            f"phones: {phones_str}, "
+            f"birthday: {bday}, "
+            f"email: {email_str}, "
+            f"address: {address_str}"
+        )
 
 
 class AddressBook(UserDict):
@@ -204,7 +210,8 @@ class AddressBook(UserDict):
                 if bday_this_year < today:
                     bday_this_year = bday_this_year.replace(year=today.year + 1)
                 if today <= bday_this_year <= next_week:
-                    # якщо день народження припадає на вихідні – переносимо на наступний понеділок
+                    # якщо день народження припадає на вихідні –
+                    # переносимо на наступний понеділок
                     congr_date = bday_this_year
                     if congr_date.weekday() >= 5:  # 5 = субота, 6 = неділя
                         congr_date = congr_date + timedelta(
