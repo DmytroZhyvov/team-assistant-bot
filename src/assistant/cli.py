@@ -13,6 +13,8 @@ from .handlers import (
     remove_phone,
     add_email,
     edit_email,
+    add_address,
+    edit_address,
     add_note,
     edit_note,
     delete_note,
@@ -75,6 +77,10 @@ def main():
             print(add_email(args, book))
         elif command == "change-email":
             print(edit_email(args, book))
+        elif command == "add-address":
+            print(add_address(args, book))
+        elif command == "change-address":
+            print(edit_address(args, book))
         # --- Нотатки ---
         elif command == "add-note":
             print(add_note(args, notes))

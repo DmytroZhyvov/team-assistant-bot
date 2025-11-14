@@ -85,6 +85,22 @@ class Email(Field):
         self.value = new_email
 
 
+class Address(Field):
+    """Клас для зберігання адреси контакту."""
+
+    def __init__(self, value: str):
+        value = value.strip()
+        if len(value) < 5:
+            raise ValueError("Address is too short.")
+        super().__init__(value)
+
+    def update_address(self, new_value: str):
+        new_value = new_value.strip()
+        if len(new_value) < 5:
+            raise ValueError("Address is too short.")
+        self.value = new_value    
+
+
 class Record:
     """Клас для зберігання інформації про контакт."""
 
@@ -93,6 +109,7 @@ class Record:
         self.phones: list[Phone] = []
         self.birthday: Birthday | None = None
         self.email: Email | None = None
+        self.address: Address | None = None
 
     def add_phone(self, phone_number: str) -> None:
         """Додає номер телефону до запису."""
@@ -137,11 +154,24 @@ class Record:
             raise ValueError("Email not set yet. Use add-email to add one.")
         self.email.update_email(new_email)
 
+    def add_address(self, address_str: str) -> None:
+        """Додає адресу до контакту."""
+        if self.address is not None:
+            raise ValueError("Address already set. Use change-address to change it.")
+        self.address = Address(address_str)
+
+    def edit_address(self, new_address: str) -> None:
+        """Редагує існуючу адресу."""
+        if self.address is None:
+            raise ValueError("Address not set yet. Use add-address to add one.")
+        self.address.update_address(new_address)
+
     def __str__(self) -> str:
         phones_str = "; ".join(p.phone_number for p in self.phones) or "No phones"
         bday = self.birthday.date_str if self.birthday else "N/A"
         email_str = self.email.value if self.email else "N/A"
-        return f"Contact name: {self.name.value}, phones: {phones_str}, birthday: {bday}, email: {email_str}"
+        address_str = getattr(self.address, "value", "N/A") if hasattr(self, "address") else "N/A"
+        return f"Contact name: {self.name.value}, phones: {phones_str}, birthday: {bday}, email: {email_str}, address: {address_str}"
 
 
 class AddressBook(UserDict):

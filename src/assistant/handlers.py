@@ -186,6 +186,30 @@ def edit_email(args: list[str], book: AddressBook) -> str:
 
 
 @input_error
+def add_address(args, book):
+    """Додає адресу до контакту."""
+    name = args[0]
+    address_text = " ".join(args[1:])
+    record = book.find(name)
+    if not record:
+        raise KeyError("Contact not found.")
+    record.add_address(address_text)
+    return "Address added."
+
+
+@input_error
+def edit_address(args, book):
+    """Редагує адресу контакту."""
+    name = args[0]
+    new_address = " ".join(args[1:])
+    record = book.find(name)
+    if not record:
+        raise KeyError("Contact not found.")
+    record.edit_address(new_address)
+    return "Address updated."
+
+
+@input_error
 def add_note(args: list[str], notes: NotesBook) -> str:
     """Додає нову нотатку."""
     text = " ".join(args)
