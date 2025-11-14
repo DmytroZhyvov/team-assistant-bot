@@ -98,7 +98,7 @@ class Address(Field):
         new_value = new_value.strip()
         if len(new_value) < 5:
             raise ValueError("Address is too short.")
-        self.value = new_value    
+        self.value = new_value
 
 
 class Record:
@@ -170,7 +170,9 @@ class Record:
         phones_str = "; ".join(p.phone_number for p in self.phones) or "No phones"
         bday = self.birthday.date_str if self.birthday else "N/A"
         email_str = self.email.value if self.email else "N/A"
-        address_str = getattr(self.address, "value", "N/A") if hasattr(self, "address") else "N/A"
+        address_str = (
+            getattr(self.address, "value", "N/A") if hasattr(self, "address") else "N/A"
+        )
         return f"Contact name: {self.name.value}, phones: {phones_str}, birthday: {bday}, email: {email_str}, address: {address_str}"
 
 
