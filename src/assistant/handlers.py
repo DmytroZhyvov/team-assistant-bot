@@ -34,22 +34,31 @@ def parse_input(user_input: str) -> tuple[str, list[str]]:
 @input_error
 def add_contact(args: list[str], book: AddressBook) -> str:
     """Додає або оновлює контакт у адресній книзі."""
+    if len(args) < 2:
+        # Потрібно 2 аргументи: name, phone
+        raise IndexError
+
     name, phone, *_ = args
     record = book.find(name)
     if record is None:
         record = Record(name)
+        record.add_phone(phone)
         book.add_record(record)
         message = "Contact added."
     else:
-        message = "Contact updated."
-    if phone:
         record.add_phone(phone)
+        message = "Contact updated."
+
     return message
 
 
 @input_error
 def change_contact(args: list[str], book: AddressBook) -> str:
     """Змінює номер телефону для вказаного контакту."""
+    if len(args) < 3:
+        # Потрібно 3 аргументи: name, OldPhone, NewPhone
+        raise IndexError
+
     name, old_phone, new_phone, *_ = args
     record = book.find(name)
     if not record:
@@ -90,6 +99,9 @@ def find_contact(args: list[str], book: AddressBook) -> str:
 @input_error
 def show_phone(args: list[str], book: AddressBook) -> str:
     """Показує телефонні номери для вказаного контакту."""
+    if len(args) < 1:
+        raise IndexError
+
     name = args[0]
     record = book.find(name)
     if not record:
@@ -101,6 +113,9 @@ def show_phone(args: list[str], book: AddressBook) -> str:
 @input_error
 def remove_phone(args: list[str], book: AddressBook) -> str:
     """Видаляє конкретний номер телефону з контакту."""
+    if len(args) < 2:
+        # Потрібно 2 аргументи: name, phone
+        raise IndexError
 
     name, phone, *_ = args
     record = book.find(name)
@@ -124,6 +139,10 @@ def show_all(book: AddressBook) -> str:
 @input_error
 def add_birthday(args: list[str], book: AddressBook) -> str:
     """Додає дату народження для вказаного контакту."""
+    if len(args) < 2:
+        # Потрібно 2 аргументи: name, birthday
+        raise IndexError
+
     name, bday_str, *_ = args
     record = book.find(name)
     if not record:
@@ -135,6 +154,9 @@ def add_birthday(args: list[str], book: AddressBook) -> str:
 @input_error
 def show_birthday(args: list[str], book: AddressBook) -> str:
     """Показує дату народження для вказаного контакту."""
+    if len(args) < 1:
+        raise IndexError
+
     name = args[0]
     record = book.find(name)
     if not record:
@@ -150,13 +172,16 @@ def birthdays(args: list[str], book: AddressBook) -> str:
     days = int(args[0]) if args else DEFAULT_BIRTHDAY_DAYS
     upcoming = book.get_upcoming_birthdays(days)
     if not upcoming:
-        return f"No birthdays in the next {days} {"days" if days != 1 else "day"}."
+        return f"No birthdays in the next {days} {'days' if days != 1 else 'day'}."
     return "\n".join(upcoming)
 
 
 @input_error
 def remove_contact(args: list[str], book: AddressBook) -> str:
     """Видаляє контакт з адресної книги за їм'ям."""
+    if len(args) < 1:
+        raise IndexError
+
     name = args[0]
     record = book.find(name)
     if not record:
@@ -167,6 +192,10 @@ def remove_contact(args: list[str], book: AddressBook) -> str:
 
 @input_error
 def add_email(args: list[str], book: AddressBook) -> str:
+    if len(args) < 2:
+        # Потрібно 2 аргументи: name, email
+        raise IndexError
+
     name, email, *_ = args
     record = book.find(name)
     if not record:
@@ -177,6 +206,10 @@ def add_email(args: list[str], book: AddressBook) -> str:
 
 @input_error
 def edit_email(args: list[str], book: AddressBook) -> str:
+    if len(args) < 2:
+        # Потрібно 2 аргументи: name, new_email
+        raise IndexError
+
     name, new_email, *_ = args
     record = book.find(name)
     if not record:
@@ -188,6 +221,9 @@ def edit_email(args: list[str], book: AddressBook) -> str:
 @input_error
 def add_address(args, book):
     """Додає адресу до контакту."""
+    if len(args) < 2:
+        raise IndexError
+
     name = args[0]
     address_text = " ".join(args[1:])
     record = book.find(name)
@@ -200,6 +236,9 @@ def add_address(args, book):
 @input_error
 def edit_address(args, book):
     """Редагує адресу контакту."""
+    if len(args) < 2:
+        raise IndexError
+
     name = args[0]
     new_address = " ".join(args[1:])
     record = book.find(name)
