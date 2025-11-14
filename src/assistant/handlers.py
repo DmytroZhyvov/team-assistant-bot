@@ -60,6 +60,37 @@ def change_contact(args: list[str], book: AddressBook) -> str:
 
 
 @input_error
+def find_contact(args: list[str], book: AddressBook) -> str:
+    """Шукає контакт за ім'ям, email або телефоном і повертає всі знайдені контакти."""
+
+    if not args:
+        raise IndexError
+
+    query = " ".join(args).strip()
+    query_lower = query.lower()
+    matches: list[Record] = []
+
+    for record in book.data.values():
+        if record.name.value.lower() == query_lower:
+            matches.append(record)
+            continue
+
+        if record.email and record.email.value.lower() == query_lower:
+            matches.append(record)
+            continue
+
+        for phone in record.phones:
+            if phone.phone_number == query:
+                matches.append(record)
+                break
+
+    if not matches:
+        return "No contacts found."
+
+    return "\n".join(str(rec) for rec in matches)
+
+
+@input_error
 def show_phone(args: list[str], book: AddressBook) -> str:
     """Показує телефонні номери для вказаного контакту."""
     name = args[0]

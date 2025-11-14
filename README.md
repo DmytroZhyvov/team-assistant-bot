@@ -77,15 +77,15 @@ Or (if not installed in editable mode):
 ### Commands
 Below is the full list of available commands with usage examples.
 
-| Command              | Description                                                       | Example                                       |
-|----------------------|-------------------------------------------------------------------|-----------------------------------------------|
-| `add-contact {name} {phone}` | Add a new contact or append a phone to an existing one      | `add-contact John 1234567890`                 |
-| `remove-contact {name}`      | Delete a contact by name                                    | `remove-contact John`                         |
-| `change-contact {name} {old_phone} {new_phone}` | Replace an existing phone number                 | `change-contact John 1234567890 0987654321` |
-| `remove-phone {name} {phone}` | Remove a specific phone from a contact                      | `remove-phone John 1234567890`              |
-| `show-phone {name}`          | Show all phone numbers for a contact                         | `show-phone John`                           |
-| `show-all-contacts`          | Display all saved contacts                                   | `show-all-contacts`                           |
-
+| Command                                  | Description                                                               | Example                                        |
+|------------------------------------------|---------------------------------------------------------------------------|------------------------------------------------|
+| `add-contact {name} {phone}`             | Add a new contact or append a phone to an existing one                   | `add-contact John 1234567890`                  |
+| `remove-contact {name}`                  | Delete a contact by name                                                 | `remove-contact John`                          |
+| `change-contact {name} {old_phone} {new_phone}` | Replace an existing phone number                                  | `change-contact John 1234567890 0987654321`    |
+| `remove-phone {name} {phone}`            | Remove a specific phone from a contact                                   | `remove-phone John 1234567890`                 |
+| `show-phone {name}`                      | Show all phone numbers for a contact                                     | `show-phone John`                              |
+| `show-all-contacts`                      | Display all saved contacts                                               | `show-all-contacts`                            |
+| `find-contact {query}`                   | Search contact by **name**, **email**, or **phone** and show full data   | `find-contact John` / `find-contact 1234567890` / `find-contact john@email.com` |
 ---
 
 ### Birthday Commands
