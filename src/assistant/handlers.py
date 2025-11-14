@@ -4,6 +4,7 @@ from assistant.notes import NotesBook
 
 DEFAULT_BIRTHDAY_DAYS = 7
 
+
 def input_error(func):
     """Декоратор для обробки помилок вводу користувача."""
 
@@ -56,6 +57,34 @@ def change_contact(args: list[str], book: AddressBook) -> str:
     if record.edit_phone(old_phone, new_phone):
         return "Phone updated."
     return "Old phone not found."
+
+
+@input_error
+def find_contact(args: list[str], book: AddressBook) -> str:
+    """Шукає контакт за ім'ям, email або телефоном і повертає всі знайдені контакти."""
+
+    if not args:
+        raise IndexError
+
+    query = " ".join(args).strip().lower()
+    matches: list[Record] = []
+
+    for record in book.data.values():
+        if record.name.value.lower() == query:
+            matches.append(record)
+            continue
+        if record.email and record.email.value.lower() == query:
+            matches.append(record)
+            continue
+        for phone in record.phones:
+            if phone.phone_number.lower() == query:
+                matches.append(record)
+                break
+
+    if not matches:
+        return "No contacts found."
+
+    return "\n".join(str(rec) for rec in matches)
 
 
 @input_error

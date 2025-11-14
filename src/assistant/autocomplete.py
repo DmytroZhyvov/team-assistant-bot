@@ -7,6 +7,7 @@ COMMANDS = [
     "change-contact",
     "remove-phone",
     "show-phone",
+    "find-contact",
     "show-all-contacts",
     "add-birthday",
     "show-birthday",
