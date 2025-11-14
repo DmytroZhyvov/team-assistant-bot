@@ -66,21 +66,18 @@ def find_contact(args: list[str], book: AddressBook) -> str:
     if not args:
         raise IndexError
 
-    query = " ".join(args).strip()
-    query_lower = query.lower()
+    query = " ".join(args).strip().lower()
     matches: list[Record] = []
 
     for record in book.data.values():
-        if record.name.value.lower() == query_lower:
+        if record.name.value.lower() == query:
             matches.append(record)
             continue
-
-        if record.email and record.email.value.lower() == query_lower:
+        if record.email and record.email.value.lower() == query:
             matches.append(record)
             continue
-
         for phone in record.phones:
-            if phone.phone_number == query:
+            if phone.phone_number.lower() == query:
                 matches.append(record)
                 break
 
